@@ -4,6 +4,7 @@ var boxSize = 75;
 var overBox = false;
 var locked = false;
 var filled = false;
+var colorPicker; 
 
 function setup() {
   createCanvas(400, 400);
@@ -11,6 +12,8 @@ function setup() {
   by = height/2;
   rectMode(RADIUS);
   strokeWeight(2);
+  colorPicker = createColorPicker('blue'); //initial color is blue
+  colorPicker.position(bx - (boxSize-10), by + (boxSize+10)); //position color picker below shape
 }
 
 function draw() {
@@ -23,15 +26,15 @@ function draw() {
     mouseY < by + boxSize
   ) {
     overBox = true; 
-    if (!locked) {
-      stroke('blue');//change stroke color 
+    if (locked === false) {
+      stroke('blue'); //change stroke color 
       fill(255);
     }
   }
   else {
     if (locked === true) {
       stroke(0); 
-      fill('blue');
+      fill(colorPicker.color());
       overbox = true;
     } 
     else {
@@ -49,15 +52,9 @@ function mousePressed() {
   //color box when cursor is over box & mouse if pressed
   if (overBox) {
     locked = true;
-    fill('blue');
+    fill(colorPicker.color());
   }
   else {
     locked = true;
-    fill('blue');
   }
-}
-
-
-function mouseReleased() {
-  locked = true;
 }
